@@ -43,9 +43,7 @@ class TodoAdapter(
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int {
-        return todos.size
-    }
+    override fun getItemCount() = todos.size
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         val curTodo = todos[position]
