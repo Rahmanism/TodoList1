@@ -6,13 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Todo(
-//    @PrimaryKey val uid: Int,
-    @ColumnInfo(name="title") val title: String,
-    @ColumnInfo(name="is_done") var isDone: Boolean = false
+    @PrimaryKey val uid: Int,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "is_done") var isDone: Boolean = false
 )
-
-//data class Todo(
-////    val uid: Int,
-//    val title: String,
-//    var isDone: Boolean = false
-//)
