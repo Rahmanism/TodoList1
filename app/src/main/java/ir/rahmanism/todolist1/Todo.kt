@@ -1,6 +1,18 @@
 package ir.rahmanism.todolist1
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Todo(
-    val title: String,
-    var isDone: Boolean = false
+//    @PrimaryKey val uid: Int,
+    @ColumnInfo(name="title") val title: String,
+    @ColumnInfo(name="is_done") var isDone: Boolean = false
 )
+
+//data class Todo(
+////    val uid: Int,
+//    val title: String,
+//    var isDone: Boolean = false
+//)
