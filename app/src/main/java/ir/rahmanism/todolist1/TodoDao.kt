@@ -11,7 +11,7 @@ interface TodoDao {
     @Query("select * from todo")
     fun getAll(): MutableList<Todo>
 
-    @Query("select * from todo where uid In (:todoIds)")
+    @Query("select * from todo where id In (:todoIds)")
     fun loadAllByIds(todoIds: List<Int>): MutableList<Todo>
 
     @Query("select * from todo where title like :title limit 1")

@@ -1,30 +1,32 @@
 package ir.rahmanism.todolist1
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import ir.rahmanism.todolist1.databinding.ActivityMainBinding
 
-val TAG : String = MainActivity::class.java.simpleName
+// val TAG: String = MainActivity::class.java.simpleName
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var todoAdapter: TodoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, ">>>>>before super.OnCreate")
         super.onCreate(savedInstanceState)
-        Log.d(TAG, ">>>>>after super.OnCreate")
-        var activityMain = ActivityMainBinding.inflate(LayoutInflater.from(this.applicationContext))
+        val activityMain = ActivityMainBinding.inflate(LayoutInflater.from(this.applicationContext))
         setContentView(activityMain.root)
 
         val db = Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "todolist1"
-        ).build()
+            AppDatabase::class.java, "todolist1.db"
+        )
+            // https://stackoverflow.com/a/76103274/3144631
+            // Room Database does not allow you to execute a database IO operation
+            // in the Main thread so we add the following line
+            .allowMainThreadQueries()
+            .build()
 
         todoAdapter = TodoAdapter(db)
 
