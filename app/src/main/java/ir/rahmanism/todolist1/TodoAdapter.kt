@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.rahmanism.todolist1.databinding.TodoItemBinding
 
 class TodoAdapter(
-    private val todos: MutableList<Todo>
+    private val db: AppDatabase
 ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+
+    val todoDao = db.todoDao()
+    val todos: MutableList<Todo> = todoDao.getAll()
 
     class TodoViewHolder(val itemBinding: TodoItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -34,9 +37,12 @@ class TodoAdapter(
     fun addTodo(todo: Todo) {
         todos.add(todo)
         notifyItemInserted(todos.size - 1)
+        todoDao.insertAll(listOf(todo))
     }
 
     fun deleteDoneTodos() {
+        val toRemove = todos.filter { it.isDone }
+        todoDao.deleteTodos(toRemove)
         todos.removeAll { todo ->
             todo.isDone
         }
@@ -53,6 +59,7 @@ class TodoAdapter(
             isDoneCb.setOnCheckedChangeListener { _, isChecked ->
                 toggleStrikeThrough(todoTitleTv, isChecked)
                 curTodo.isDone = !curTodo.isDone
+                todoDao.updateTodo(curTodo)
             }
         }
     }
